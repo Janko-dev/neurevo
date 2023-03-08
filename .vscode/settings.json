@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "nn.h": "c",
+        "graphics.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
+}

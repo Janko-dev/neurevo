@@ -1,2 +1,2 @@
-# neurevo
+# Nevo
 Genetic algorithm with neural networks
