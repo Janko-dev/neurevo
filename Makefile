@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -g -Wextra -std=c11
 SRC = src/
-IN = $(SRC)nn.c $(SRC)graphics.c $(SRC)main.c
+IN = $(SRC)nn.c $(SRC)texture.c $(SRC)graphics.c $(SRC)main.c
 OUT = nevo
 
 ifeq ($(OS), Windows_NT)
