@@ -2,7 +2,6 @@
 
 void init_network(Network* nn, size_t* layer_dims, size_t layer_count){ 
 
-    nn->output = NULL;
     nn->layer_count = layer_count-1;
     nn->layers = (Layer*)malloc(sizeof(Layer) * layer_count);
 
@@ -39,19 +38,6 @@ float sigmoid(float x){
     return 1.0/(1.0 + exp(-x));
 } 
 
-// Vector* feedforward(Network* nn, Vector* xs){
-//     // Vector* ys = xs;
-//     // for (int i = 0; i < nn->layer_count; ++i){
-//     //     Vector* ys1 = prod_mat_vec(nn->layers[i].weights, ys);
-//     //     free_vec(ys);
-//     //     add_vec(ys1, nn->layers[i].bias);
-//     //     apply_vec(ys1, sigmoid);
-//     //     ys = ys1;
-//     //     // print_vec(ys);
-//     // }
-//     // return ys;
-// }
-
 void feedforward(Network* nn, float* xs, size_t xs_size){
 
     if (xs_size != nn->layers[0].mat_cols){
@@ -59,7 +45,10 @@ void feedforward(Network* nn, float* xs, size_t xs_size){
         exit(1);
     }
 
-    float* prev_out = xs;
+    float prev_out[0xff];
+
+    for (size_t i = 0; i < xs_size; ++i)
+        prev_out[i] = xs[i];
 
     for (size_t i = 0; i < nn->layer_count; ++i){
         size_t rows    = nn->layers[i].mat_rows;
@@ -67,7 +56,7 @@ void feedforward(Network* nn, float* xs, size_t xs_size){
         float* weights = nn->layers[i].mat_data;
         float* bias    = nn->layers[i].b_data;
 
-        nn->output = (float*)calloc(rows, sizeof(float));
+        // nn->output = (float*)calloc(rows, sizeof(float));
         nn->output_size = rows;
 
         for (size_t j = 0; j < rows; ++j){
@@ -80,8 +69,9 @@ void feedforward(Network* nn, float* xs, size_t xs_size){
             nn->output[j] = sigmoid(nn->output[j] + bias[j]);
         }
 
-        if (i != 0) free(prev_out);
-        prev_out = nn->output;
+        for (size_t i = 0; i < nn->output_size; ++i){
+            prev_out[i] = nn->output[i];
+        }
     }
 
 }

@@ -1,2 +1,2 @@
 # Nevo
-Genetic algorithm with neural networks
+Genetic algorithm that uses neural networks for the agents

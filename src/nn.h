@@ -29,7 +29,7 @@ typedef struct {
 typedef struct {
     Layer* layers;
     size_t layer_count;
-    float* output;
+    float output[0xff];
     size_t output_size;
 } Network;
 
